@@ -10,14 +10,22 @@ var cli = meow({
 	help: [
 		'Usage',
 		'  $ rgb [input]',
+		'  $ rgba [input]',
 		'',
 		'Examples',
 		'  $ rgb #000',
-		'  rgb(0, 0, 0)'
+		'  rgb(0, 0, 0)',
+		'',
+		'  $ rgba #000',
+		'  rgba(0, 0, 0, .5)'
 	]
 });
 
-if (cli.input[0]) {
+var input = cli.input[0];
+
+if (input && input.slice(0, 4) === 'rgba') {
+	output = 'rgba(' + hexRgb(cli.input[0]).join(', ') + ', .5)';
+} else if (input && input.slice(0, 3) === 'rgb') {
 	output = 'rgb(' + hexRgb(cli.input[0]).join(', ') + ')';
 } else {
 	output = cli.help;
